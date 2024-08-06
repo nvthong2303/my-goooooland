@@ -40,4 +40,25 @@
 - ..
 
 ## Channel
--
+- Là các kênh giao tiếp trung gian giữa các Goroutine trong Golang. Giúp các goroutine có thể gửi và nhận dữ liệu một cách an toàn thông qua cơ chế lock-free.
+- Mặc định, giao tiếp trong channel là giao tiếp 2 chiều, nghĩa là channel có thể dùng cho cả gửi và nhận dữ liệu.
+- Việc gửi dữ liệu vào channel sẽ giống như "Tôi đã hoàn tất công việc của mình với dữ liệu này và bàn giao chúng cho người khác".
+- Cơ chế Block của channel: Việc gửi và nhận qua channel có hỗ trợ cơ chế Block, việc này giúp các Goroutines giao tiếp qua Channel một cách đồng bộ. Về nguyên tắc, Channel sẽ blocl goroutines nếu nó chưa sẵn sàng (Deadlock).
+- Có thể định nghĩa các func sử dụng channel chỉ nhận hoặc gửi dữ liệu.
+- Close() : dùng để đóng channel, không thể gửi data vào channel đã bị đóng.
+- Có thể for để lặp qua các giá trị được gửi vào 1 channel, vòng lặp tự động kết thúc khi goroutine gửi tín hiệu close channel.
+    ```
+    // s là 1 channel chỉ gửi
+    for n := range s {
+        fmt.Println("n: ", n)
+        counter += n
+    }
+    ```
+
+- Channel (UnBuffered Channel), là khi 1 goroutine A gửi dữ liệu đến thì nó sẽ block A lại cho đến khi có bất kỳ goroutine nào khác đến lấy dữ liệu. 
+
+## Buffered Channel
+- Buffered channel là một channel có khả năng lưu trữ dữ liệu bên trong đó. Ngược lại UnBuffered Channel, nó mang trong mình 1 sức chứa (capacity). Buffered channel sẽ không bị block goroutine nếu sức chứa vẫn còn, không cần phải có 1 goroutine khác đến lấy dữ liệu. Nó sẽ block goroutine hiện tại nếu vượt quá sức chứa.
+- Buffered channel có 2 thuộc tính len (số lượng dữ liệu đang có trong bufferd channel) và cap (sức chứa tối đa).
+- Đọc dữ liệu từ Buffered channel sẽ block goroutine (giống unBuffered Channel).
+- Lưu trữ dữ liệu theo FIFO.

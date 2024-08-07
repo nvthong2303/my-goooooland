@@ -1,6 +1,29 @@
 # My Goland
+Không có gì đặc biệt, nơi tôi tự học golang thôi :D
 
-## Goroutine
+## Systax / Feature:
+### Datatype:
+- Basic type: numbers, strings, boolean.
+    - numbers:
+    - string:
+    - boolean:
+    - byte:
+    - rune: 
+
+- Aggregate type (kiểu dữ liệu tham chiếu): array, structs
+    - arr: mảng có kích thước cố định, không thể thay đổi sau khi khai báo
+    - struct: ~object(js) hoặc dict(py), các trường không được truyền giá trị có giá trị mặc định là 0.
+- Reference type (kiểu tổng hợp): pointers, slices, maps, functions, channels
+    - slices: kiểu dữ liệu tổng hợp, biểu diễn một dymanic array, chúng giống array nhưng kích thước có thể thay đổi trong khi chương trình chạy và chúng tham chiếu đến dữ liệu chứ không phải giá trị.
+    - maps: (kiểu dữ liệu tham chiếu) tập hợp các cặp key-value không có thứ tự, các key phải unique nhưng value có thể lặp lại.
+    - pointers: 
+    - interfaces: 
+- Interface
+
+### Generics:
+- hiểu đơn giản, generics là 1 khái niệm có trong nhiều ngôn ngữ, generics programming là việc định nghĩa các function mà không định nghĩa kiểu dữ liệu sẽ sử dụng hoặc trả về. 
+
+## 1. Goroutine
 
 - Là một trong những tính năng đặc biệt nhất trong Golang, dùng trong lập trình concurrency cực kỳ đơn giản.
 - Bản chất là các function / method được thực thi một cách độc lập và đồng thời nhưng vẫn có thể kết nối với nhau.
@@ -39,7 +62,7 @@
 - GoScheduler là một phần của Go Runtime, được tích hợp vào ứng dụng golang. Có nghĩa là Go Scheduler chạy trong User Space, tầng phía trên của Kernel. Hiện tại cách triển khai Go Scheduler không phải là Preemptive scheduler mà là Cooperating scheduler (scheduler này cần các sự kiện User space được xác định rõ ràng để có thể đưa ra quyết định schedule).
 - ..
 
-## Channel
+## 2. Channel
 - Là các kênh giao tiếp trung gian giữa các Goroutine trong Golang. Giúp các goroutine có thể gửi và nhận dữ liệu một cách an toàn thông qua cơ chế lock-free.
 - Mặc định, giao tiếp trong channel là giao tiếp 2 chiều, nghĩa là channel có thể dùng cho cả gửi và nhận dữ liệu.
 - Việc gửi dữ liệu vào channel sẽ giống như "Tôi đã hoàn tất công việc của mình với dữ liệu này và bàn giao chúng cho người khác".
@@ -57,8 +80,9 @@
 
 - Channel (UnBuffered Channel), là khi 1 goroutine A gửi dữ liệu đến thì nó sẽ block A lại cho đến khi có bất kỳ goroutine nào khác đến lấy dữ liệu. 
 
-## Buffered Channel
+## 3. Buffered Channel
 - Buffered channel là một channel có khả năng lưu trữ dữ liệu bên trong đó. Ngược lại UnBuffered Channel, nó mang trong mình 1 sức chứa (capacity). Buffered channel sẽ không bị block goroutine nếu sức chứa vẫn còn, không cần phải có 1 goroutine khác đến lấy dữ liệu. Nó sẽ block goroutine hiện tại nếu vượt quá sức chứa.
 - Buffered channel có 2 thuộc tính len (số lượng dữ liệu đang có trong bufferd channel) và cap (sức chứa tối đa).
 - Đọc dữ liệu từ Buffered channel sẽ block goroutine (giống unBuffered Channel).
 - Lưu trữ dữ liệu theo FIFO.
+

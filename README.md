@@ -89,6 +89,7 @@ Không có gì đặc biệt, nơi tôi tự học golang thôi :D
 
 
 ## 4. Panic and Recover, Defer:
+- Đây là 2 Tính năng (Panic và Recover) được sử dụng để quản lý lỗi trong chtrinh Go.
 - Panic: tương tự như execption trong js hay python (nó là 1 exeption trong go). Panic được gây ra bởi 1 lỗi runtime và gọi thẳng đến hàm Panic trong go (tích hợp sẵn). Panic có thể xảy ra theo 2 cách: Lỗi runtime của chtrnh hoặc được gọi trực tiếp.
     - Panic lỗi runtime: khi chtrnh gặp lỗi (truy cập index quá giới hạn của arr, gửi data vào channel đã đóng, ... ) Panic được tạo ra, bao gồm 2 điều:
         - thông báo lỗi
@@ -110,4 +111,6 @@ Không có gì đặc biệt, nơi tôi tự học golang thôi :D
 
 - Defer: Khi Panic được kích hoạt, hàm đang thực thi sẽ dừng lại và các hàm Defer (trong ngăn xếp) được gọi cho đến khi tất cả chúng được trả về. Lúc đó chtrnh mới dừng và trả ra Panic. ([Tham khảo](https://tuhocweb.com/golang-nang-cao-panic-va-recover-trong-golang-156.html))
 
-- Recover: hàm được tích hợp sẵn trong go, dùng để lấy lại quyền kiểm soát goroutine đang panic. Hàm Recover trả về giá trị được truyền cho hàm panic và không bị Side Effect, nghĩa là goroutine không bị panic, hàm recover sẽ trả về nil 
+- Recover: hàm được tích hợp sẵn trong go, dùng để lấy lại quyền kiểm soát goroutine đang panic. Hàm Recover trả về giá trị được truyền cho hàm panic và không bị Side Effect, nghĩa là goroutine không bị panic, hàm recover sẽ trả về  nil . Do đó việc kiểm tra giá trị trả về của recover có nil không để biết chtrinh có đang bị panic hay không.
+    +  hàm defer() là hàm duy nhất được phép thực thi sau khi panic xảy ra, vì vậy đặt recover trong hàm defer là hợp lý nhất. Nếu không sẽ không ngăn chặn được panic.
+    + Recover chỉ có thể khôi phục lỗi panic xảy ra trong cùng 1 goroutine.

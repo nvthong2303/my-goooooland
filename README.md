@@ -86,3 +86,28 @@ Không có gì đặc biệt, nơi tôi tự học golang thôi :D
 - Đọc dữ liệu từ Buffered channel sẽ block goroutine (giống unBuffered Channel).
 - Lưu trữ dữ liệu theo FIFO.
 
+
+
+## 4. Panic and Recover, Defer:
+- Panic: tương tự như execption trong js hay python (nó là 1 exeption trong go). Panic được gây ra bởi 1 lỗi runtime và gọi thẳng đến hàm Panic trong go (tích hợp sẵn). Panic có thể xảy ra theo 2 cách: Lỗi runtime của chtrnh hoặc được gọi trực tiếp.
+    - Panic lỗi runtime: khi chtrnh gặp lỗi (truy cập index quá giới hạn của arr, gửi data vào channel đã đóng, ... ) Panic được tạo ra, bao gồm 2 điều:
+        - thông báo lỗi
+            exp: 
+            ```
+            panic: runtime error: index out of range [2] with length 2
+            ```
+        - trace của ngăn xếp nơi xảy ra panic
+            exp: 
+            ```
+            goroutine 1 [running]:
+            main.checkAndPrint(...)
+                    main.go:12
+            main.main()
+                    /main.go:8 +0x1b
+            exit status 2
+            ```
+    - Panic được gọi trực tiếp: dùng để bắt các ngoại lệ (input không hợp lệ khiến chtrinh không thể tiếp tục, ...)
+
+- Defer: Khi Panic được kích hoạt, hàm đang thực thi sẽ dừng lại và các hàm Defer (trong ngăn xếp) được gọi cho đến khi tất cả chúng được trả về. Lúc đó chtrnh mới dừng và trả ra Panic. ([Tham khảo](https://tuhocweb.com/golang-nang-cao-panic-va-recover-trong-golang-156.html))
+
+- Recover: hàm được tích hợp sẵn trong go, dùng để lấy lại quyền kiểm soát goroutine đang panic. Hàm Recover trả về giá trị được truyền cho hàm panic và không bị Side Effect, nghĩa là goroutine không bị panic, hàm recover sẽ trả về nil 
